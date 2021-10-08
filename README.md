@@ -39,6 +39,13 @@ make sure that all pods are in running state
     ```bash
     kubectl exec -it $(kubectl get po -l app=attacker-app -ojsonpath='{.items[0].metadata.name}') -- sh -c "curl http://backend.storefront.svc.cluster.local:80 -H 'User-Agent: Mozilla/4.0' -XPOST --data-raw 'smk=1234'"
     ```
-5. now go and check the Alerts section in the UI and you should get a signature triggered alert
+5. Now, go and check the Alerts page in the UI and you should see a signature triggered alert
 
 <img src="img/DPI-Alert.png" alt="DPI-Alert" width="100%"/>
+
+6. Stop DeepPacketInspection
+
+    ```bash
+    kubectl delete DeepPacketInspection dpi-backend -n storefront 
+    ```
+    
