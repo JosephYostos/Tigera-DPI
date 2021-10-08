@@ -17,13 +17,13 @@ Security teams need to run DPI quickly in response to unusual network traffic in
 2. Create DeepPacketInspection resource, in this example we will enable DPI on backend pod in storefront namespace    
 
     ```bash
-cat << EoF > DPI-storefront-backend.yaml    
-apiVersion: projectcalico.org/v3
-kind: DeepPacketInspection
-metadata:
-  name: dpi-backend
-  namespace: storefront
-spec:
-  selector: app == "backend"
-EOF
+    cat << EoF > DPI-storefront-backend.yaml    
+    apiVersion: projectcalico.org/v3
+    kind: DeepPacketInspection
+    metadata:
+      name: dpi-backend
+      namespace: storefront
+    spec:
+      selector: app == "backend"
+    EOF
     ```
