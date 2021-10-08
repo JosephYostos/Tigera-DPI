@@ -41,4 +41,4 @@ make sure that all pods are in running state
     ```
 5. now go and check the Alerts section in the UI and you should get a signature triggered alert
 
-
+<img src="img/DPI-Alert.png" alt="DPI-Alert" width="100%"/>
