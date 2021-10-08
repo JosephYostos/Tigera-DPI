@@ -17,7 +17,7 @@ Security teams need to run DPI quickly in response to unusual network traffic in
 2. Create DeepPacketInspection resource, in this example we will enable DPI on backend pod in storefront namespace    
 
     ```bash
-    cat << EoF > DPI-storefront-backend.yaml    
+    cat <<EOF| kubectl apply -f -   
     apiVersion: projectcalico.org/v3
     kind: DeepPacketInspection
     metadata:
@@ -26,4 +26,19 @@ Security teams need to run DPI quickly in response to unusual network traffic in
     spec:
       selector: app == "backend"
     EOF
+    ``` 
+3. check that the "tigera-dpi" pods created successfully, it's a deaemonSet so one pod should created in each node
+    
+    ```bash
+    kubectl get pods -n tigera-dpi
+   ```
+make sure that all pods are in running state
+
+4. Trigger Snort rule from attacker pod to backend.storefront 
+
+    ```bash
+    kubectl exec -it $(kubectl get po -l app=attacker-app -ojsonpath='{.items[0].metadata.name}') -- sh -c "curl http://backend.storefront.svc.cluster.local:80 -H 'User-Agent: Mozilla/4.0' -XPOST --data-raw 'smk=1234'"
     ```
+5. now go and check the Alerts section in the UI and you should get a signature triggered alert
+
+
